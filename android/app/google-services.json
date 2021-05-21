@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "120640688520",
+    "project_id": "baby-gym-new",
+    "storage_bucket": "baby-gym-new.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120640688520:android:f64ec4b9d5832c3bd32a3d",
+        "android_client_info": {
+          "package_name": "com.example.babygym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120640688520-n4rem9urd6lph7cga2q8ah2k4nphk4k0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGdTv7UmQxL_cAoP8PNcKqswNIEABSELQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120640688520-n4rem9urd6lph7cga2q8ah2k4nphk4k0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
