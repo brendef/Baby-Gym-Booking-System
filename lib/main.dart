@@ -1,4 +1,6 @@
-import 'package:babygym/authentication.dart';
+import 'package:babygym/ui/screens/login.dart';
+import 'package:babygym/ui/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +10,20 @@ void main() async {
   runApp(App());
 }
 
-class App extends StatelessWidget {
+// ignore: must_be_immutable
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
+  User? user = FirebaseAuth.instance.currentUser;
+}
+
+class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Baby Gym',
-      home: Authentication(),
+      home: widget.user != null ? Home() : Login(),
     );
   }
 }
