@@ -71,17 +71,17 @@ class _RegisterState extends State<Register> {
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.4,
-              height: 45,
+              height: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
+                color: AppTheme.babygymPrimary,
               ),
               child: MaterialButton(
                 onPressed: () async {
                   bool shouldNavigate = await register(
                       _nameField.text, _emailField.text, _passwordField.text);
                   if (shouldNavigate) {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Home(),
@@ -89,7 +89,13 @@ class _RegisterState extends State<Register> {
                     );
                   }
                 },
-                child: Text('Register'),
+                child: Text(
+                  'Register',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
             Padding(

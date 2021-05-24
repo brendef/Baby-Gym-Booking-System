@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 Future<bool> signIn(String email, String password) async {
   try {
@@ -45,24 +46,19 @@ void updateUserDetails(String name) {
   }
 }
 
-Future<bool> addApointment(String id, String time) async {
+Future<bool> addApointment(
+    String instructor, TimeOfDay? time, DateTime? date) async {
   try {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    var value = double.parse(time);
-    DocumentReference documentReference = FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('Users')
         .doc(uid)
         .collection('Apointments')
-        .doc(id);
-    FirebaseFirestore.instance.runTransaction((transaction) async {
-      DocumentSnapshot snapshot = await transaction.get(documentReference);
-      if (!snapshot.exists) {
-        documentReference.set({'Time': value});
-        return true;
-      }
-      double newTime = (snapshot.data() as dynamic)['Time'] + value;
-      transaction.update(documentReference, {'Time': newTime});
-      return true;
+        .doc(date.toString())
+        .set({
+      'Instructor': instructor,
+      'Time': '${time!.hour} ${time.minute}',
+      'Date': '${date!.day} ${date.month} ${date.year}'
     });
     throw ('error');
   } catch (error) {
@@ -70,6 +66,33 @@ Future<bool> addApointment(String id, String time) async {
     return false;
   }
 }
+
+// Original add apointment
+// Future<bool> addApointment(String instructor, String time) async {
+//   try {
+//     String uid = FirebaseAuth.instance.currentUser!.uid;
+//     var value = double.parse(time);
+//     DocumentReference documentReference = FirebaseFirestore.instance
+//         .collection('Users')
+//         .doc(uid)
+//         .collection('Apointments')
+//         .doc(instructor);
+//     FirebaseFirestore.instance.runTransaction((transaction) async {
+//       DocumentSnapshot snapshot = await transaction.get(documentReference);
+//       if (!snapshot.exists) {
+//         documentReference.set({'Time': value});
+//         return true;
+//       }
+//       double newTime = (snapshot.data() as dynamic)['Time'] + value;
+//       transaction.update(documentReference, {'Time': newTime});
+//       return true;
+//     });
+//     throw ('error');
+//   } catch (error) {
+//     print(error);
+//     return false;
+//   }
+// }
 
 // original register method
 // Future<bool> register(String email, String password) async {

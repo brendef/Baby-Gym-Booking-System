@@ -60,17 +60,17 @@ class _LoginState extends State<Login> {
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.4,
-              height: 45,
+              height: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
+                color: AppTheme.babygymPrimary,
               ),
               child: MaterialButton(
                 onPressed: () async {
                   bool shouldNavigate =
                       await signIn(_emailField.text, _passwordField.text);
                   if (shouldNavigate) {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Home(),
@@ -78,7 +78,13 @@ class _LoginState extends State<Login> {
                     );
                   }
                 },
-                child: Text('Login'),
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
             Padding(
