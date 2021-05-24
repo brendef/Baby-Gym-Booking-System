@@ -12,6 +12,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   var user = FirebaseAuth.instance.currentUser;
   TextEditingController _nameField = TextEditingController();
+  TextEditingController _cellNumberField = TextEditingController();
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
   @override
@@ -56,6 +57,19 @@ class _RegisterState extends State<Register> {
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
                 style: TextStyle(color: Colors.white),
+                controller: _cellNumberField,
+                decoration: InputDecoration(
+                  labelText: 'Cellphone Number',
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.3,
+              child: TextFormField(
+                style: TextStyle(color: Colors.white),
                 controller: _passwordField,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -79,7 +93,11 @@ class _RegisterState extends State<Register> {
               child: MaterialButton(
                 onPressed: () async {
                   bool shouldNavigate = await register(
-                      _nameField.text, _emailField.text, _passwordField.text);
+                    _nameField.text,
+                    _cellNumberField.text,
+                    _emailField.text,
+                    _passwordField.text,
+                  );
                   if (shouldNavigate) {
                     Navigator.pushReplacement(
                       context,

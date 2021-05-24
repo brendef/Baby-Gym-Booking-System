@@ -1,3 +1,4 @@
+import 'package:babygym/ui/screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,13 @@ Future<bool> signIn(String email, String password) async {
   }
 }
 
-Future<bool> register(String name, String email, String password) async {
+Future<bool> register(
+    String name, String cellphone, String email, String password) async {
   try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     print(name);
-    updateUserDetails(name);
+    updateUserDetails(name, cellphone);
     return true;
   } on FirebaseAuthException catch (error) {
     if (error.code == 'weak-password') {
@@ -33,7 +35,18 @@ Future<bool> register(String name, String email, String password) async {
   }
 }
 
-void updateUserDetails(String name) {
+Future<void> signOut(context) async {
+  await FirebaseAuth.instance.signOut();
+  Navigator.of(context).pop();
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => Login(),
+    ),
+  );
+}
+
+void updateUserDetails(String name, String cellphone) {
   User? user = FirebaseAuth.instance.currentUser;
 
   if (user != null) {
@@ -41,8 +54,31 @@ void updateUserDetails(String name) {
         .collection('Users')
         .doc(user.uid)
         .collection('Details')
-        .doc(name)
-        .set({'name': name, 'email': user.email, 'uid': user.uid});
+        .doc(user.uid)
+        .set({
+      'name': name,
+      'email': user.email,
+      'cellphone': cellphone,
+      'uid': user.uid
+    });
+  }
+}
+
+Future<bool> updateName(String name) async {
+  User? user = FirebaseAuth.instance.currentUser;
+  try {
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .collection('Details')
+          .doc(user.uid)
+          .update({'name': name});
+    }
+    return true;
+  } catch (error) {
+    print(error.toString());
+    return false;
   }
 }
 
