@@ -9,6 +9,7 @@ class Profile extends StatelessWidget {
   User? user = FirebaseAuth.instance.currentUser;
 
   TextEditingController _nameField = TextEditingController();
+  TextEditingController _emailField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -139,48 +140,6 @@ class Profile extends StatelessWidget {
                                 },
                                 child: Text(
                                   'Change Name',
-                                  style: TextStyle(
-                                    color: AppTheme.babygymGrey,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Text(
-                            'Change Email',
-                            style: TextStyle(fontSize: 17),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Enter Email",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              validator: (val) {
-                                if (val!.length == 0) {
-                                  return "Email cannot be empty";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: MaterialButton(
-                                color: AppTheme.babygymPrimary,
-                                onPressed: () {},
-                                child: Text(
-                                  'Change Email',
                                   style: TextStyle(
                                     color: AppTheme.babygymGrey,
                                   ),

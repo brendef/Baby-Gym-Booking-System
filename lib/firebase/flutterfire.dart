@@ -81,7 +81,7 @@ Future<bool> updateName(String name) async {
           .doc(user.uid)
           .update({'name': name});
     }
-    FirebaseAuth.instance.currentUser!.updateProfile(displayName: name);
+    user!.updateProfile(displayName: name);
     return true;
   } catch (error) {
     print(error.toString());
