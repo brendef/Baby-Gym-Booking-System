@@ -15,6 +15,7 @@ class _AddApointmentState extends State<AddApointment> {
     "Instructor 1",
     "Instructor 2",
     "Instructor 3",
+    "Instructor 4",
   ];
 
   String instructor = "Instructor 1";

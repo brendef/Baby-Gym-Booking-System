@@ -49,11 +49,28 @@ class Profile extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            "https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg.jpg",
-                          ),
-                          radius: 50.0,
+                        StreamBuilder<String>(
+                          stream: dowloadUrl().asStream(),
+                          builder: (context, snapshot) {
+                            return snapshot.connectionState ==
+                                    ConnectionState.waiting
+                                ? CircularProgressIndicator(
+                                    color: AppTheme.babygymGrey,
+                                  )
+                                : GestureDetector(
+                                    onTap: uploadToStorage,
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        snapshot.data.toString(),
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.bottomRight,
+                                        child: Icon(Icons.camera_alt),
+                                      ),
+                                      radius: 50.0,
+                                    ),
+                                  );
+                          },
                         ),
                         SizedBox(height: 15.0),
                         Text(
@@ -320,4 +337,3 @@ class Profile extends StatelessWidget {
     );
   }
 }
-// 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
