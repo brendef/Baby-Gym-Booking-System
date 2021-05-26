@@ -7,6 +7,12 @@ import 'package:flutter/material.dart';
 class AddApointment extends StatefulWidget {
   @override
   _AddApointmentState createState() => _AddApointmentState();
+
+  Object? _document = {};
+
+  AddApointment(Object? document) {
+    this._document = document;
+  }
 }
 
 class _AddApointmentState extends State<AddApointment> {

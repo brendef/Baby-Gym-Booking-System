@@ -28,19 +28,11 @@ class _HomeState extends State<Home> {
 
   void handleClick(String value) {
     switch (value) {
-      case 'Add Apointment':
+      case 'Find Instructor':
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AddApointment(),
-          ),
-        );
-        break;
-      case 'Edit Profile':
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AddApointment(),
+            builder: (context) => Instructors(),
           ),
         );
         break;
@@ -53,39 +45,41 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_currentIndex == 0
-            ? 'Bookings'
-            : _currentIndex == 1
-                ? 'Instructors'
-                : _currentIndex == 2
-                    ? 'Profile'
-                    : ''),
-        actions: [
-          PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert),
-            onSelected: handleClick,
-            itemBuilder: (BuildContext context) {
-              if (_currentIndex == 0) {
-                return {'Add Apointment', 'Logout'}.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              } else {
-                return {'Logout'}.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              }
-            },
-          ),
-        ],
-        backgroundColor: AppTheme.babygymPrimary,
-      ),
+      appBar: _currentIndex != 1
+          ? AppBar(
+              title: Text(_currentIndex == 0
+                  ? 'Bookings'
+                  : _currentIndex == 1
+                      ? 'Instructors'
+                      : _currentIndex == 2
+                          ? 'Profile'
+                          : ''),
+              actions: [
+                PopupMenuButton<String>(
+                  icon: Icon(Icons.more_vert),
+                  onSelected: handleClick,
+                  itemBuilder: (BuildContext context) {
+                    if (_currentIndex == 0) {
+                      return {'Find Instructor', 'Logout'}.map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(choice),
+                        );
+                      }).toList();
+                    } else {
+                      return {'Logout'}.map((String choice) {
+                        return PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(choice),
+                        );
+                      }).toList();
+                    }
+                  },
+                ),
+              ],
+              backgroundColor: AppTheme.babygymPrimary,
+            )
+          : null,
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -116,7 +110,7 @@ class _HomeState extends State<Home> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddApointment(),
+                    builder: (context) => Instructors(),
                   ),
                 );
               },
