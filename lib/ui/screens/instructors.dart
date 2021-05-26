@@ -1,6 +1,5 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Instructors extends StatelessWidget {
@@ -36,36 +35,50 @@ class Instructors extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       color: AppTheme.babygymWhite,
                     ),
-                    child: Column(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '${(document.data() as dynamic)['name']}',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: AppTheme.babygymPrimary,
-                            ),
+                        Flexible(
+                          flex: 1,
+                          child: Image.network(
+                            'https://www.babygym.co.za/wp-content/uploads/upme/1602152369_upme_thumb_anne-carstens.jpg',
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "${(document.data() as dynamic)['city']}",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.babygymPrimary,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Date: ${(document.data() as dynamic)['email']}",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.babygymPrimary,
-                            ),
+                        Flexible(
+                          flex: 3,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  (document.data() as dynamic)['name'],
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppTheme.babygymPrimary,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "${(document.data() as dynamic)['city']}",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppTheme.babygymPrimary,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  "${(document.data() as dynamic)['email']}",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppTheme.babygymPrimary,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

@@ -133,9 +133,17 @@ Future<bool> addApointment(
         .collection('Apointments')
         .doc(date.toString())
         .set({
-      'Instructor': instructor,
-      'Time': '${time!.hour} ${time.minute}',
-      'Date': '${date!.day} ${date.month} ${date.year}'
+      'instructor': instructor,
+      'time': {
+        'hour': time!.hour,
+        'minute': time.minute,
+      },
+      'date': {
+        'weekday': date!.weekday,
+        'day': date.day,
+        'month': date.month,
+        'year': date.year,
+      }
     });
     throw ('error');
   } catch (error) {
@@ -185,10 +193,32 @@ void uploadToStorage() {
   });
 }
 
+// Future<List<String>> fetchInstructors() async {
+//   final doc = await FirebaseFirestore.instance.collection('Instructors').get();
+//   final instructors = doc;
+//   print(instructors);
+//   return [] ;
+// }
+
+// List fetchInstructors() {
+//   List instructors = [];
+//   FutureBuilder(
+//     future: FirebaseFirestore.instance.collection('Instructors').get(),
+//     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//       if (!snapshot.hasData) {
+//         return Center(
+//           child: CircularProgressIndicator(
+//             color: Colors.white,
+//           ),
+//         );
+//       }
+//       snapshot.data!.docs[name].add;
+//     },
+//   );
+// }
+
 List populateInstructors() {
-  List instructors = [
-    
-  ];
+  List instructors = [];
   return instructors;
 }
 

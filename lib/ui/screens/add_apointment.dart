@@ -1,5 +1,7 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
+import 'package:babygym/ui/screens/instructors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddApointment extends StatefulWidget {
@@ -15,7 +17,6 @@ class _AddApointmentState extends State<AddApointment> {
     "Instructor 1",
     "Instructor 2",
     "Instructor 3",
-    "Instructor 4",
   ];
 
   String instructor = "Instructor 1";
@@ -92,6 +93,13 @@ class _AddApointmentState extends State<AddApointment> {
               child: Text('Book Apointment'),
             ),
           ),
+          // Container(
+          //   padding: EdgeInsets.only(top: 30),
+          //   child: MaterialButton(
+          //     onPressed: () {},
+          //     child: Text(fetchInstructors()),
+          //   ),
+          // ),
         ],
       ),
     );
