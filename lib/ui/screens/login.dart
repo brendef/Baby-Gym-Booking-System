@@ -70,7 +70,8 @@ class _LoginState extends State<Login> {
                   bool shouldNavigate =
                       await signIn(_emailField.text, _passwordField.text);
                   if (shouldNavigate) {
-                    Navigator.pushReplacement(
+                    Navigator.of(context).pop();
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Home(),

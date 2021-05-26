@@ -89,6 +89,24 @@ Future<bool> updateName(String name) async {
   }
 }
 
+Future<bool> updateCellphone(String cellphone) async {
+  User? user = FirebaseAuth.instance.currentUser;
+  try {
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .collection('Details')
+          .doc(user.uid)
+          .update({'cellphone': cellphone});
+    }
+    return true;
+  } catch (error) {
+    print(error.toString());
+    return false;
+  }
+}
+
 Future<void> updateProfilePicture(String name) async {
   User? user = FirebaseAuth.instance.currentUser;
   try {
@@ -169,21 +187,26 @@ void uploadToStorage() {
 
 // Firestore Add instructors
 void addInstructors() {
-  FirebaseFirestore.instance.collection('Instructors').add({
-    'istrcutor 1': {
+  var instructors = {
+    {
       'name': 'Miley Cyrus',
       'age': '26',
       'location': 'Cape Town',
     },
-    'istrcutor 2': {
+    {
       'name': 'Micheal Jackson',
       'age': '66',
-      'location': 'Joburg'
+      'location': 'Joburg',
     },
-    'istrcutor 3': {
+    {
       'name': 'Bill Cosby',
       'age': '96',
       'location': 'America',
     },
+  };
+
+  instructors.map((e) {
+    print(e);
+    print(e.toString());
   });
 }

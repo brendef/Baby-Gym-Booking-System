@@ -63,6 +63,7 @@ class _HomeState extends State<Home> {
                     : ''),
         actions: [
           PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert),
             onSelected: handleClick,
             itemBuilder: (BuildContext context) {
               if (_currentIndex == 0) {

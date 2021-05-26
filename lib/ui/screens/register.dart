@@ -33,7 +33,7 @@ class _RegisterState extends State<Register> {
                 style: TextStyle(color: Colors.white),
                 controller: _nameField,
                 decoration: InputDecoration(
-                  labelText: 'Name',
+                  labelText: 'Full Name',
                   labelStyle: TextStyle(
                     color: Colors.white,
                   ),
@@ -56,15 +56,15 @@ class _RegisterState extends State<Register> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: Colors.white),
-                controller: _cellNumberField,
-                decoration: InputDecoration(
-                  labelText: 'Cellphone Number',
-                  labelStyle: TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(color: Colors.white),
+                  controller: _cellNumberField,
+                  decoration: InputDecoration(
+                    labelText: 'Cellphone Number',
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ),
+                  keyboardType: TextInputType.number),
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
@@ -99,7 +99,8 @@ class _RegisterState extends State<Register> {
                     _passwordField.text,
                   );
                   if (shouldNavigate) {
-                    Navigator.pushReplacement(
+                    Navigator.of(context).pop();
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Home(),

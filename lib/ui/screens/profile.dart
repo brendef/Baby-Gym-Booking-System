@@ -9,7 +9,6 @@ class Profile extends StatelessWidget {
   User? user = FirebaseAuth.instance.currentUser;
 
   TextEditingController _nameField = TextEditingController();
-  TextEditingController _emailField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -159,27 +158,32 @@ class Profile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             TextFormField(
-                              decoration: InputDecoration(
-                                labelText: "Enter Cellphone number",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
+                                decoration: InputDecoration(
+                                  labelText: "Enter Cellphone number",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
                                 ),
-                              ),
-                              validator: (val) {
-                                if (val!.length == 0) {
-                                  return "Cellphone number cannot be empty";
-                                } else {
-                                  return null;
-                                }
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                            ),
+                                validator: (val) {
+                                  if (val!.length == 0) {
+                                    return "Cellphone number cannot be empty";
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                keyboardType: TextInputType.number),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: MaterialButton(
                                 color: AppTheme.babygymPrimary,
-                                onPressed: () {},
+                                onPressed: () async {
+                                  bool changeName =
+                                      await updateName(_nameField.text);
+                                  if (changeName) {
+                                    _nameField.clear();
+                                  }
+                                },
                                 child: Text(
                                   'Change Number',
                                   style: TextStyle(
