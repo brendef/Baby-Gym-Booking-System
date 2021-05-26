@@ -1,16 +1,14 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
-import 'package:babygym/ui/screens/instructors.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddApointment extends StatefulWidget {
   @override
   _AddApointmentState createState() => _AddApointmentState();
 
-  Object? _document = {};
+  String? _document;
 
-  AddApointment(Object? document) {
+  AddApointment(String? document) {
     this._document = document;
   }
 }
@@ -19,41 +17,23 @@ class _AddApointmentState extends State<AddApointment> {
   DateTime? _date;
   TimeOfDay? _time;
 
-  List<String> instructors = [
-    "Instructor 1",
-    "Instructor 2",
-    "Instructor 3",
-  ];
+  String? instructor;
 
-  String instructor = "Instructor 1";
+  void initState() {
+    instructor = widget._document;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Make apointment'),
+        title: Text(instructor.toString()),
         backgroundColor: AppTheme.babygymPrimary,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Select instructor'),
-          DropdownButtonHideUnderline(
-            child: DropdownButton(
-              value: instructor,
-              onChanged: (value) {
-                setState(() {
-                  instructor = value.toString();
-                });
-              },
-              items: instructors.map<DropdownMenuItem<String>>((value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
           Container(
             width: MediaQuery.of(context).size.width / 1.3,
             child: Text(_date == null
@@ -93,19 +73,12 @@ class _AddApointmentState extends State<AddApointment> {
           Container(
             child: MaterialButton(
               onPressed: () async {
-                await addApointment(instructor, _time, _date);
+                // await addApointment(instructor, _time, _date);
                 Navigator.of(context).pop();
               },
               child: Text('Book Apointment'),
             ),
           ),
-          // Container(
-          //   padding: EdgeInsets.only(top: 30),
-          //   child: MaterialButton(
-          //     onPressed: () {},
-          //     child: Text(fetchInstructors()),
-          //   ),
-          // ),
         ],
       ),
     );

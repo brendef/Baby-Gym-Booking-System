@@ -41,8 +41,9 @@ class Instructors extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                AddApointment(document.data()),
+                            builder: (context) => AddApointment(
+                              (document.data() as dynamic)['name'],
+                            ),
                           ),
                         );
                       },
