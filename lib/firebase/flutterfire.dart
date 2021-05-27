@@ -70,11 +70,11 @@ void updateUserDetails(String name, String cellphone) {
   FirebaseAuth.instance.currentUser!.updateProfile(displayName: name);
 }
 
-Future<bool> updateName(String name) async {
+bool updateName(String name) {
   User? user = FirebaseAuth.instance.currentUser;
   try {
     if (user != null) {
-      await FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection('Users')
           .doc(user.uid)
           .collection('Details')
@@ -89,11 +89,11 @@ Future<bool> updateName(String name) async {
   }
 }
 
-Future<bool> updateCellphone(String cellphone) async {
+bool updateCellphone(String cellphone) {
   User? user = FirebaseAuth.instance.currentUser;
   try {
     if (user != null) {
-      await FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection('Users')
           .doc(user.uid)
           .collection('Details')
@@ -131,7 +131,7 @@ Future<bool> addApointment(
         .collection('Users')
         .doc(uid)
         .collection('Apointments')
-        .doc(date.toString())
+        .doc(date.toString() + time.toString())
         .set({
       'instructor': instructor,
       'time': {
@@ -144,8 +144,8 @@ Future<bool> addApointment(
         'month': date.month,
         'year': date.year,
       }
-    });
-    throw ('error');
+    }, SetOptions(merge: true));
+    throw ('error in add apointment');
   } catch (error) {
     print(error);
     return false;

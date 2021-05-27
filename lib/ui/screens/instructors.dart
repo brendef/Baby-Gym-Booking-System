@@ -1,5 +1,4 @@
 import 'package:babygym/colors/app_theme.dart';
-import 'package:babygym/firebase/flutterfire.dart';
 import 'package:babygym/ui/screens/add_apointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +41,7 @@ class Instructors extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => AddApointment(
-                              (document.data() as dynamic)['name'],
+                              document.data(),
                             ),
                           ),
                         );
@@ -58,15 +57,21 @@ class Instructors extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Flexible(
+                            Expanded(
                               flex: 1,
                               child: Image.network(
-                                'https://www.babygym.co.za/wp-content/uploads/upme/1602152369_upme_thumb_anne-carstens.jpg',
+                                (document.data() as dynamic)['photo_url'],
+                                width: 130,
+                                height: 130,
                               ),
                             ),
-                            Flexible(
-                              flex: 3,
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Expanded(
+                              flex: 2,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -78,20 +83,20 @@ class Instructors extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(5.0),
+                                  //   child: Text(
+                                  //     "${(document.data() as dynamic)['city']}",
+                                  //     style: TextStyle(
+                                  //       fontSize: 12,
+                                  //       color: AppTheme.babygymPrimary,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.all(5.0),
                                     child: Text(
-                                      "${(document.data() as dynamic)['city']}",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppTheme.babygymPrimary,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      "${(document.data() as dynamic)['email']}",
+                                      (document.data() as dynamic)['venue'],
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: AppTheme.babygymPrimary,

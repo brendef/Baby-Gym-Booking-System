@@ -1,7 +1,6 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
 import 'package:babygym/ui/screens/Instructors.dart';
-import 'package:babygym/ui/screens/add_apointment.dart';
 import 'package:babygym/ui/screens/apointments.dart';
 import 'package:babygym/ui/screens/profile.dart';
 import 'package:flutter/material.dart';

@@ -5,10 +5,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
 
   TextEditingController _nameField = TextEditingController();
+
+  TextEditingController _numberField = TextEditingController();
+
+  bool _validateName = false;
+  bool _validateNumber = false;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +105,9 @@ class Profile extends StatelessWidget {
                           child: Text(
                             'Edit Your Information',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         Padding(
@@ -112,17 +124,13 @@ class Profile extends StatelessWidget {
                               controller: _nameField,
                               decoration: InputDecoration(
                                 labelText: "Enter Full Name",
+                                errorText: _validateName
+                                    ? 'Name Can\'t Be Empty'
+                                    : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
                               ),
-                              validator: (val) {
-                                if (val!.length == 0) {
-                                  return "Full Name cannot be empty";
-                                } else {
-                                  return null;
-                                }
-                              },
                               keyboardType: TextInputType.emailAddress,
                             ),
                             Padding(
@@ -130,15 +138,22 @@ class Profile extends StatelessWidget {
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: MaterialButton(
                                 color: AppTheme.babygymPrimary,
-                                onPressed: () async {
-                                  bool changeName =
-                                      await updateName(_nameField.text);
-                                  if (changeName) {
-                                    _nameField.clear();
-                                  }
+                                onPressed: () {
+                                  setState(() {
+                                    if (_numberField.text.trim().isEmpty) {
+                                      _validateName = true;
+                                    } else {
+                                      _validateName = false;
+                                      bool changeName =
+                                          updateName(_nameField.text);
+                                      if (changeName) {
+                                        _nameField.clear();
+                                      }
+                                    }
+                                  });
                                 },
                                 child: Text(
-                                  'Change Name',
+                                  'Change Number',
                                   style: TextStyle(
                                     color: AppTheme.babygymGrey,
                                   ),
@@ -158,31 +173,36 @@ class Profile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: "Enter Cellphone number",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
+                              controller: _numberField,
+                              decoration: InputDecoration(
+                                labelText: "Enter Cellphone number",
+                                errorText: _validateNumber
+                                    ? 'Number Can\'t Be Empty'
+                                    : null,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
                                 ),
-                                validator: (val) {
-                                  if (val!.length == 0) {
-                                    return "Cellphone number cannot be empty";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                keyboardType: TextInputType.number),
+                              ),
+                              keyboardType: TextInputType.number,
+                            ),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: MaterialButton(
                                 color: AppTheme.babygymPrimary,
-                                onPressed: () async {
-                                  bool changeName =
-                                      await updateName(_nameField.text);
-                                  if (changeName) {
-                                    _nameField.clear();
-                                  }
+                                onPressed: () {
+                                  setState(() {
+                                    if (_numberField.text.trim().isEmpty) {
+                                      _validateNumber = true;
+                                    } else {
+                                      _validateNumber = false;
+                                      bool changeNumber =
+                                          updateCellphone(_numberField.text);
+                                      if (changeNumber) {
+                                        _numberField.clear();
+                                      }
+                                    }
+                                  });
                                 },
                                 child: Text(
                                   'Change Number',

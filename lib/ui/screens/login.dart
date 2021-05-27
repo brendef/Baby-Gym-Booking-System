@@ -14,6 +14,10 @@ class _LoginState extends State<Login> {
   var user = FirebaseAuth.instance.currentUser;
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
+
+  bool _validateEmail = false;
+  bool _validatePassword = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,30 +33,30 @@ class _LoginState extends State<Login> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: Colors.white),
                 controller: _emailField,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.white),
-                  labelText: 'Email',
-                  labelStyle: TextStyle(
-                    color: Colors.white,
+                  labelText: "Enter Email Address",
+                  errorText: _validateEmail ? 'Email Can\'t Be Empty' : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
+                keyboardType: TextInputType.emailAddress,
               ),
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: Colors.white),
                 controller: _passwordField,
-                obscureText: true,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Colors.white),
-                  labelText: 'Password',
-                  labelStyle: TextStyle(
-                    color: Colors.white,
+                  labelText: "Enter Password",
+                  errorText:
+                      _validatePassword ? 'Password Can\'t Be Empty' : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
+                obscureText: true,
               ),
             ),
             SizedBox(
@@ -66,18 +70,61 @@ class _LoginState extends State<Login> {
                 color: AppTheme.babygymPrimary,
               ),
               child: MaterialButton(
-                onPressed: () async {
-                  bool shouldNavigate =
-                      await signIn(_emailField.text, _passwordField.text);
-                  if (shouldNavigate) {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Home(),
-                      ),
-                    );
-                  }
+                onPressed: () {
+                  setState(() async {
+                    if (_passwordField.text.trim().isEmpty) {
+                      _validatePassword = true;
+                    } else {
+                      _validatePassword = false;
+                    }
+
+                    if (_emailField.text.trim().isEmpty) {
+                      _validateEmail = true;
+                    } else {
+                      _validateEmail = false;
+                    }
+
+                    if (!_validateEmail && !_validatePassword) {
+                      bool shouldNavigate =
+                          await signIn(_emailField.text, _passwordField.text);
+                      if (shouldNavigate) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => Home(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                    }
+                  });
+                  // setState(() {
+                  //   if (_passwordField.text.trim().isEmpty) {
+                  //     _validatePassword = true;
+                  //   } else {
+                  //     _validatePassword = false;
+                  //   }
+
+                  //   if (_emailField.text.trim().isEmpty) {
+                  //     _validateEmail = true;
+                  //   } else {
+                  //     _validateEmail = false;
+                  //   }
+
+                  //   if (_validateEmail && _validatePassword) {
+                  //     bool shouldNavigate =
+                  //         signIn(_emailField.text, _passwordField.text);
+                  //     if (shouldNavigate) {
+                  //       Navigator.pushAndRemoveUntil(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (BuildContext context) => Home(),
+                  //         ),
+                  //         (route) => false,
+                  //       );
+                  //     }
+                  //   }
+                  // });
                 },
                 child: Text(
                   'Login',

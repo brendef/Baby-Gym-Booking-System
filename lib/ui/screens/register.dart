@@ -15,6 +15,11 @@ class _RegisterState extends State<Register> {
   TextEditingController _cellNumberField = TextEditingController();
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
+
+  bool _validateName = false;
+  bool _validateNumber = false;
+  bool _validateEmail = false;
+  bool _validatePassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,54 +35,58 @@ class _RegisterState extends State<Register> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: Colors.white),
                 controller: _nameField,
                 decoration: InputDecoration(
-                  labelText: 'Full Name',
-                  labelStyle: TextStyle(
-                    color: Colors.white,
+                  labelText: "Enter Full Name",
+                  errorText: _validateName ? 'Name Can\'t Be Empty' : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
+                keyboardType: TextInputType.emailAddress,
               ),
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: Colors.white),
                 controller: _emailField,
                 decoration: InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: TextStyle(
-                    color: Colors.white,
+                  labelText: "Enter Email Address",
+                  errorText: _validateEmail ? 'Email Can\'t Be Empty' : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
+                keyboardType: TextInputType.emailAddress,
               ),
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                  style: TextStyle(color: Colors.white),
-                  controller: _cellNumberField,
-                  decoration: InputDecoration(
-                    labelText: 'Cellphone Number',
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                    ),
+                controller: _cellNumberField,
+                decoration: InputDecoration(
+                  labelText: "Enter Cellphone number",
+                  errorText: _validateNumber ? 'Number Can\'t Be Empty' : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
-                  keyboardType: TextInputType.number),
+                ),
+                keyboardType: TextInputType.number,
+              ),
             ),
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: Colors.white),
                 controller: _passwordField,
-                obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(
-                    color: Colors.white,
+                  labelText: "Enter Password",
+                  errorText:
+                      _validatePassword ? 'Password Can\'t Be Empty' : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
+                obscureText: true,
               ),
             ),
             SizedBox(
@@ -91,22 +100,53 @@ class _RegisterState extends State<Register> {
                 color: AppTheme.babygymPrimary,
               ),
               child: MaterialButton(
-                onPressed: () async {
-                  bool shouldNavigate = await register(
-                    _nameField.text,
-                    _cellNumberField.text,
-                    _emailField.text,
-                    _passwordField.text,
-                  );
-                  if (shouldNavigate) {
-                    Navigator.of(context).pop();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Home(),
-                      ),
-                    );
-                  }
+                onPressed: () {
+                  setState(() async {
+                    if (_cellNumberField.text.trim().isEmpty) {
+                      _validateNumber = true;
+                    } else {
+                      _validateNumber = false;
+                    }
+
+                    if (_nameField.text.trim().isEmpty) {
+                      _validateName = true;
+                    } else {
+                      _validateName = false;
+                    }
+
+                    if (_passwordField.text.trim().isEmpty) {
+                      _validatePassword = true;
+                    } else {
+                      _validatePassword = false;
+                    }
+
+                    if (_emailField.text.trim().isEmpty) {
+                      _validateEmail = true;
+                    } else {
+                      _validateEmail = false;
+                    }
+
+                    if (!_validateName &&
+                        !_validateNumber &&
+                        !_validateEmail &&
+                        !_validatePassword) {
+                      bool shouldNavigate = await register(
+                        _nameField.text,
+                        _cellNumberField.text,
+                        _emailField.text,
+                        _passwordField.text,
+                      );
+                      if (shouldNavigate) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => Home(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                    }
+                  });
                 },
                 child: Text(
                   'Register',
