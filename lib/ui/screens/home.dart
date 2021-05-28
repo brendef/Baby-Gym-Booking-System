@@ -81,6 +81,8 @@ class _HomeState extends State<Home> {
           : null,
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        unselectedItemColor: AppTheme.babygymSecondary,
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         items: [

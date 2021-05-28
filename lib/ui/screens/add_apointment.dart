@@ -208,8 +208,8 @@ class _AddApointmentState extends State<AddApointment> {
                       onPressed: () => showDatePicker(
                         context: context,
                         initialDate: _date ?? DateTime.now(),
-                        firstDate: DateTime(2021),
-                        lastDate: DateTime(2222),
+                        firstDate: DateTime.now().subtract(Duration(days: 0)),
+                        lastDate: DateTime.now().add(Duration(days: 60)),
                       ).then((date) {
                         setState(() {
                           _date = date;

@@ -21,6 +21,10 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppTheme.babygymSecondary,
+        elevation: 0,
+      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -30,132 +34,137 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width / 1.3,
-              child: TextFormField(
-                controller: _emailField,
-                decoration: InputDecoration(
-                  labelText: "Enter Email Address",
-                  errorText: _validateEmail ? 'Email Can\'t Be Empty' : null,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+            Text(
+              'Welcome back to Baby Gym',
+              style: TextStyle(color: Colors.white, fontSize: 25),
+            ),
+            SizedBox(height: 30),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  child: TextFormField(
+                    style: TextStyle(color: AppTheme.babygymGrey),
+                    controller: _emailField,
+                    decoration: InputDecoration(
+                      labelText: "Enter Email Address",
+                      labelStyle: TextStyle(
+                        color: AppTheme.babygymGrey,
+                      ),
+                      errorText:
+                          _validateEmail ? 'Email Can\'t Be Empty' : null,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white10,
+                        ),
+                      ),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
                   ),
                 ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width / 1.3,
-              child: TextFormField(
-                controller: _passwordField,
-                decoration: InputDecoration(
-                  labelText: "Enter Password",
-                  errorText:
-                      _validatePassword ? 'Password Can\'t Be Empty' : null,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+                SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  child: TextFormField(
+                    style: TextStyle(color: AppTheme.babygymGrey),
+                    controller: _passwordField,
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(
+                        color: AppTheme.babygymGrey,
+                      ),
+                      labelText: "Enter Password",
+                      errorText:
+                          _validatePassword ? 'Password Can\'t Be Empty' : null,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white10,
+                        ),
+                      ),
+                    ),
+                    obscureText: true,
                   ),
                 ),
-                obscureText: true,
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 35,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width / 1.4,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: AppTheme.babygymPrimary,
-              ),
-              child: MaterialButton(
-                onPressed: () {
-                  setState(() async {
-                    if (_passwordField.text.trim().isEmpty) {
-                      _validatePassword = true;
-                    } else {
-                      _validatePassword = false;
-                    }
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 35,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: AppTheme.babygymPrimary,
+                  ),
+                  child: MaterialButton(
+                    onPressed: () async {
+                      setState(() {
+                        if (_passwordField.text.trim().isEmpty) {
+                          _validatePassword = true;
+                        } else {
+                          _validatePassword = false;
+                        }
 
-                    if (_emailField.text.trim().isEmpty) {
-                      _validateEmail = true;
-                    } else {
-                      _validateEmail = false;
-                    }
-
-                    if (!_validateEmail && !_validatePassword) {
-                      bool shouldNavigate =
-                          await signIn(_emailField.text, _passwordField.text);
-                      if (shouldNavigate) {
-                        Navigator.pushAndRemoveUntil(
+                        if (_emailField.text.trim().isEmpty) {
+                          _validateEmail = true;
+                        } else {
+                          _validateEmail = false;
+                        }
+                      });
+                      if (!_validateEmail && !_validatePassword) {
+                        bool shouldNavigate =
+                            await signIn(_emailField.text, _passwordField.text);
+                        if (shouldNavigate) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => Home(),
+                            ),
+                            (route) => false,
+                          );
+                        }
+                      }
+                    },
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => Home(),
+                            builder: (BuildContext context) => Register(),
                           ),
-                          (route) => false,
                         );
-                      }
-                    }
-                  });
-                  // setState(() {
-                  //   if (_passwordField.text.trim().isEmpty) {
-                  //     _validatePassword = true;
-                  //   } else {
-                  //     _validatePassword = false;
-                  //   }
-
-                  //   if (_emailField.text.trim().isEmpty) {
-                  //     _validateEmail = true;
-                  //   } else {
-                  //     _validateEmail = false;
-                  //   }
-
-                  //   if (_validateEmail && _validatePassword) {
-                  //     bool shouldNavigate =
-                  //         signIn(_emailField.text, _passwordField.text);
-                  //     if (shouldNavigate) {
-                  //       Navigator.pushAndRemoveUntil(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //           builder: (BuildContext context) => Home(),
-                  //         ),
-                  //         (route) => false,
-                  //       );
-                  //     }
-                  //   }
-                  // });
-                },
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Register(),
+                      },
+                      child: Text(
+                        'Don\'t have an account? Sign up here.',
+                        style: TextStyle(color: Colors.white),
                       ),
-                    );
-                  },
-                  child: Text(
-                    'Don\'t have an account? Sign up here.',
-                    style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 35,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 35,
+                ),
+              ],
             ),
           ],
         ),

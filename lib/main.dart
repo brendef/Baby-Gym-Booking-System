@@ -1,5 +1,5 @@
-import 'package:babygym/ui/screens/login.dart';
 import 'package:babygym/ui/screens/home.dart';
+import 'package:babygym/ui/screens/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class _AppState extends State<App> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Baby Gym',
-      home: widget.user != null ? Home() : Login(),
+      home: widget.user != null ? Home() : Splash(),
     );
   }
 }
