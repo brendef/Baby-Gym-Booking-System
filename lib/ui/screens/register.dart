@@ -16,11 +16,15 @@ class _RegisterState extends State<Register> {
   TextEditingController _cellNumberField = TextEditingController();
   TextEditingController _emailField = TextEditingController();
   TextEditingController _passwordField = TextEditingController();
+  TextEditingController _confirmPasswordField = TextEditingController();
 
+  bool _passwordsMatch = false;
   bool _validateName = false;
   bool _validateNumber = false;
   bool _validateEmail = false;
   bool _validatePassword = false;
+  bool _validateConfirmPassword = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,6 +149,34 @@ class _RegisterState extends State<Register> {
               ),
             ),
             SizedBox(
+              height: 5,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.3,
+              child: TextFormField(
+                style: TextStyle(color: AppTheme.babygymGrey),
+                controller: _confirmPasswordField,
+                decoration: InputDecoration(
+                  labelText: "Confirm Password",
+                  labelStyle: TextStyle(
+                    color: AppTheme.babygymGrey,
+                  ),
+                  errorText: _validateConfirmPassword
+                      ? 'Confirm Password Can\'t Be Empty'
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.white10,
+                    ),
+                  ),
+                ),
+                obscureText: true,
+              ),
+            ),
+            SizedBox(
               height: MediaQuery.of(context).size.height / 35,
             ),
             Container(
@@ -175,16 +207,30 @@ class _RegisterState extends State<Register> {
                       _validatePassword = false;
                     }
 
+                    if (_confirmPasswordField.text.trim().isEmpty) {
+                      _validateConfirmPassword = true;
+                    } else {
+                      _validateConfirmPassword = false;
+                    }
+
                     if (_emailField.text.trim().isEmpty) {
                       _validateEmail = true;
                     } else {
                       _validateEmail = false;
                     }
+
+                    if (_passwordField.text.trim() ==
+                        _confirmPasswordField.text.trim()) {
+                      _passwordsMatch = true;
+                    } else {
+                      _passwordsMatch = false;
+                    }
                   });
                   if (!_validateName &&
                       !_validateNumber &&
                       !_validateEmail &&
-                      !_validatePassword) {
+                      !_validatePassword &&
+                      _passwordsMatch) {
                     bool shouldNavigate = await register(
                       _nameField.text,
                       _cellNumberField.text,

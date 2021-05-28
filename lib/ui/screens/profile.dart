@@ -14,11 +14,16 @@ class _ProfileState extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
 
   TextEditingController _nameField = TextEditingController();
-
   TextEditingController _numberField = TextEditingController();
+  TextEditingController _passwordField = TextEditingController();
+  TextEditingController _newPasswordField = TextEditingController();
+  TextEditingController _confirmPasswordField = TextEditingController();
 
   bool _validateName = false;
   bool _validateNumber = false;
+  bool _validatePassword = false;
+  bool _validateNewPassword = false;
+  bool _validateConfirmPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -230,19 +235,16 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         TextFormField(
+                          controller: _passwordField,
                           decoration: InputDecoration(
-                            labelText: "Current Password",
+                            labelText: "Current password",
+                            errorText: _validatePassword
+                                ? 'Current password Can\'t Be Empty'
+                                : null,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
-                          validator: (val) {
-                            if (val!.length == 0) {
-                              return "Current password field cannot be empty";
-                            } else {
-                              return null;
-                            }
-                          },
                           obscureText: true,
                         ),
                         Padding(
@@ -253,25 +255,22 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         TextFormField(
+                          controller: _newPasswordField,
                           decoration: InputDecoration(
-                            labelText: "New Password",
+                            labelText: "New password",
+                            errorText: _validateNewPassword
+                                ? 'Confrim password Can\'t Be Empty'
+                                : null,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
-                          validator: (val) {
-                            if (val!.length == 0) {
-                              return "New password field cannot be empty";
-                            } else {
-                              return null;
-                            }
-                          },
                           obscureText: true,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text(
-                            'Confirm New Password',
+                            'New Password',
                             style: TextStyle(fontSize: 17),
                           ),
                         ),
@@ -279,19 +278,16 @@ class _ProfileState extends State<Profile> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             TextFormField(
+                              controller: _confirmPasswordField,
                               decoration: InputDecoration(
-                                labelText: "Comfirm new Password",
+                                labelText: "Confirm new password",
+                                errorText: _validateConfirmPassword
+                                    ? 'Confrim password Can\'t Be Empty'
+                                    : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
                                 ),
                               ),
-                              validator: (val) {
-                                if (val!.length == 0) {
-                                  return "Confirm new password field cannot be empty";
-                                } else {
-                                  return null;
-                                }
-                              },
                               obscureText: true,
                             ),
                             Padding(
@@ -299,7 +295,30 @@ class _ProfileState extends State<Profile> {
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: MaterialButton(
                                 color: AppTheme.babygymPrimary,
-                                onPressed: () {},
+                                onPressed: () {
+                                  setState(() {
+                                    if (_passwordField.text.isEmpty) {
+                                      _validatePassword = true;
+                                    } else {
+                                      _validatePassword = false;
+                                    }
+                                    if (_newPasswordField.text.isEmpty) {
+                                      _validateNewPassword = true;
+                                    } else {
+                                      _validateNewPassword = false;
+                                    }
+                                    if (_confirmPasswordField.text.isEmpty) {
+                                      _validateConfirmPassword = true;
+                                    } else {
+                                      _validateConfirmPassword = false;
+                                    }
+                                  });
+                                  if (!_validatePassword &&
+                                      !_validateNewPassword &&
+                                      !_validateConfirmPassword) {
+                                    print('Change password');
+                                  }
+                                },
                                 child: Text(
                                   'Change Password',
                                   style: TextStyle(color: AppTheme.babygymGrey),
