@@ -1,7 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html';
-
-import 'package:babygym/ui/screens/login.dart';
+import 'package:babygym/ui/screens/splash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -44,9 +43,20 @@ Future<void> signOut(context) async {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => Login(),
+      builder: (context) => Splash(),
     ),
   );
+}
+
+Future<bool> changePassword(String password) async {
+  try {
+    await FirebaseAuth.instance.currentUser!.updatePassword(password);
+    print('password chanegd');
+    return true;
+  } catch (error) {
+    print(error);
+    return false;
+  }
 }
 
 void updateUserDetails(String name, String cellphone) {

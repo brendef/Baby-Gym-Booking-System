@@ -24,6 +24,61 @@ class _RegisterState extends State<Register> {
   bool _validateEmail = false;
   bool _validatePassword = false;
   bool _validateConfirmPassword = false;
+  bool _notStrong = false;
+
+  Text passwordError = Text('');
+  Text numberInvalid = Text('');
+
+  Text getPasswordError(String password) {
+    if (password.length < 6) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text(
+        'Password is too short, please enter a password longer than 6 characters',
+        style: TextStyle(color: Colors.red),
+      );
+    } else if (!password.contains(new RegExp(r'[A-Z]'))) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text(
+        'Password contains no capital letters',
+        style: TextStyle(color: Colors.red),
+      );
+    } else if (!password.contains(new RegExp(r'[0-9]'))) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text(
+        'Password is too weak, it has no numbers',
+        style: TextStyle(color: Colors.red),
+      );
+    } else if (password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text(
+        'Password contains no special characters, eg: * # & @ !',
+        style: TextStyle(color: Colors.red),
+      );
+    }
+    setState(() {
+      _notStrong = false;
+    });
+    return Text('');
+  }
+
+  Text checkNumber(String number) {
+    if (number.length < 10 || !number.contains(new RegExp(r'[0-9]'))) {
+      return Text(
+        'Cellphone number is invalid',
+        style: TextStyle(color: Colors.red),
+      );
+    } else {
+      return Text('');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +231,8 @@ class _RegisterState extends State<Register> {
                 obscureText: true,
               ),
             ),
+            passwordError,
+            numberInvalid,
             SizedBox(
               height: MediaQuery.of(context).size.height / 35,
             ),
@@ -226,11 +283,22 @@ class _RegisterState extends State<Register> {
                       _passwordsMatch = false;
                     }
                   });
+                  passwordError = getPasswordError(_passwordField.text);
+                  numberInvalid = checkNumber(_cellNumberField.text);
+                  if (_passwordsMatch == false) {
+                    setState(() {
+                      passwordError = Text(
+                        'Passwords do not match',
+                        style: TextStyle(color: Colors.red),
+                      );
+                    });
+                  }
                   if (!_validateName &&
                       !_validateNumber &&
                       !_validateEmail &&
                       !_validatePassword &&
-                      _passwordsMatch) {
+                      _passwordsMatch &&
+                      !_notStrong) {
                     bool shouldNavigate = await register(
                       _nameField.text,
                       _cellNumberField.text,

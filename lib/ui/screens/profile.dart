@@ -24,6 +24,56 @@ class _ProfileState extends State<Profile> {
   bool _validatePassword = false;
   bool _validateNewPassword = false;
   bool _validateConfirmPassword = false;
+  bool _notStrong = false;
+  bool _passwordsMatch = false;
+  bool _currentPassword = false;
+
+  Text passwordMessage = Text('');
+
+  bool checkPasswordsMatch(String newPassword, String confirmPassword) {
+    if (newPassword == confirmPassword) {
+      return true;
+    } else {
+      setState(() {
+        passwordMessage = Text(
+          'Passwords do not match',
+          style: TextStyle(
+            color: Colors.red,
+          ),
+        );
+      });
+      return false;
+    }
+  }
+
+  Text getPasswordError(String password) {
+    if (password.length < 6) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text(
+          'Password is too short, please enter a password longer than 6 characters');
+    } else if (!password.contains(new RegExp(r'[A-Z]'))) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text('Password contains no capital letters');
+    } else if (!password.contains(new RegExp(r'[0-9]'))) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text('Password is too weak, it has no numbers');
+    } else if (password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      setState(() {
+        _notStrong = true;
+      });
+      return Text('Password contains no special characters, eg: * # & @ !');
+    }
+    setState(() {
+      _notStrong = false;
+    });
+    return Text('');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -270,7 +320,7 @@ class _ProfileState extends State<Profile> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text(
-                            'New Password',
+                            'Confirm New Password',
                             style: TextStyle(fontSize: 17),
                           ),
                         ),
@@ -290,12 +340,17 @@ class _ProfileState extends State<Profile> {
                               ),
                               obscureText: true,
                             ),
+                            passwordMessage,
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: MaterialButton(
                                 color: AppTheme.babygymPrimary,
-                                onPressed: () {
+                                onPressed: () async {
+                                  _currentPassword = await signIn(
+                                      FirebaseAuth.instance.currentUser!.email
+                                          .toString(),
+                                      _passwordField.text);
                                   setState(() {
                                     if (_passwordField.text.isEmpty) {
                                       _validatePassword = true;
@@ -313,10 +368,46 @@ class _ProfileState extends State<Profile> {
                                       _validateConfirmPassword = false;
                                     }
                                   });
+                                  passwordMessage = getPasswordError(
+                                    _newPasswordField.text,
+                                  );
+                                  _passwordsMatch = checkPasswordsMatch(
+                                    _newPasswordField.text,
+                                    _confirmPasswordField.text,
+                                  );
+                                  if (!_currentPassword) {
+                                    passwordMessage = Text(
+                                      'Current password is incorrect',
+                                      style: TextStyle(color: Colors.red),
+                                    );
+                                  }
                                   if (!_validatePassword &&
                                       !_validateNewPassword &&
-                                      !_validateConfirmPassword) {
-                                    print('Change password');
+                                      !_validateConfirmPassword &&
+                                      !_notStrong &&
+                                      _passwordsMatch &&
+                                      _currentPassword) {
+                                    bool didChange = await changePassword(
+                                      _newPasswordField.text,
+                                    );
+                                    if (didChange) {
+                                      setState(() {
+                                        passwordMessage = Text(
+                                          'Password has been changed sucessfully',
+                                          style: TextStyle(color: Colors.green),
+                                        );
+                                        _passwordField.clear();
+                                        _newPasswordField.clear();
+                                        _confirmPasswordField.clear();
+                                      });
+                                    } else {
+                                      setState(() {
+                                        passwordMessage = Text(
+                                          'Password not changed',
+                                          style: TextStyle(color: Colors.red),
+                                        );
+                                      });
+                                    }
                                   }
                                 },
                                 child: Text(
