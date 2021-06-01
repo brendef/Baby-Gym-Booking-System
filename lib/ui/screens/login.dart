@@ -34,10 +34,10 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Welcome back to Baby Gym',
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
+            // Text(
+            //   'Welcome back to Baby Gym',
+            //   style: TextStyle(color: Colors.white, fontSize: 25),
+            // ),
             SizedBox(height: 30),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
