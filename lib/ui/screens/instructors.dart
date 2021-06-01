@@ -10,6 +10,12 @@ class Instructors extends StatelessWidget {
       appBar: AppBar(
         title: Text('Instructors'),
         backgroundColor: AppTheme.babygymPrimary,
+        actions: [TextField(
+          decoration: InputDecoration(
+            hintText: 'Search', 
+            prefixIcon: Icon(Icons.search)),
+        )],
+        
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
