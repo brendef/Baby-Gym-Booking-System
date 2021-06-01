@@ -162,6 +162,22 @@ Future<bool> addApointment(
   }
 }
 
+Future<bool> removeApointment(String id) async {
+  try {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .collection('Apointments')
+        .doc(id)
+        .delete();
+    return true;
+  } catch (error) {
+    print(error);
+    return false;
+  }
+}
+
 Future<String> dowloadUrl() {
   return FirebaseStorage.instance
       .refFromURL('gs://baby-gym-new.appspot.com/' +
