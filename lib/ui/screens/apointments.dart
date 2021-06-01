@@ -1,4 +1,5 @@
 import 'package:babygym/colors/app_theme.dart';
+import 'package:babygym/ui/screens/apointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,14 @@ class Apointments extends StatelessWidget {
     }
   }
 
+  String formatMinute(String minute) {
+    if (minute == '0') {
+      return '00';
+    } else {
+      return minute;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -83,68 +92,88 @@ class Apointments extends StatelessWidget {
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    width: MediaQuery.of(context).size.width / 1.3,
-                    // height: MediaQuery.of(context).size.height / 12,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: AppTheme.babygymWhite,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Column(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Apointment(
+                            document.data(),
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      // height: MediaQuery.of(context).size.height / 12,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppTheme.babygymWhite,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 50.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 3,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    (document.data() as dynamic)['date']['day']
+                                        .toString(),
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    '${getMonthName((document.data() as dynamic)['date']['month'].toString())}' +
+                                        ',',
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  Text(
+                                    getWeekday((document.data()
+                                            as dynamic)['date']['weekday']
+                                        .toString()),
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // SizedBox(
+                            //   width: 100,
+                            // ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  (document.data() as dynamic)['date']['day']
-                                      .toString(),
-                                  style: TextStyle(fontSize: 20),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 8.0),
+                                  child: Text(
+                                    (document.data() as dynamic)['instructor'],
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: AppTheme.babygymPrimary,
+                                    ),
+                                  ),
                                 ),
-                                Text(
-                                  '${getMonthName((document.data() as dynamic)['date']['month'].toString())}' +
-                                      ',',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                Text(
-                                  '${getWeekday((document.data() as dynamic)['date']['weekday'].toString())}',
-                                  style: TextStyle(fontSize: 15),
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    ' Time: ${(document.data() as dynamic)['time']['hour'].toString()}:' +
+                                        formatMinute((document.data()
+                                                as dynamic)['time']['minute']
+                                            .toString()),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: AppTheme.babygymPrimary,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            width: 100,
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  (document.data() as dynamic)['instructor'],
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: AppTheme.babygymPrimary,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  (document.data() as dynamic)['time']
-                                      .toString(),
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: AppTheme.babygymPrimary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

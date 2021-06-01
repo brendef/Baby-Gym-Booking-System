@@ -36,8 +36,7 @@ class _HomeState extends State<Home> {
         );
         break;
       case 'Logout':
-        addInstructors();
-        //signOut(context);
+        signOut(context);
         break;
     }
   }
