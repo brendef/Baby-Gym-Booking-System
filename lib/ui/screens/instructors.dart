@@ -76,7 +76,7 @@ class Instructors extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      (document.data() as dynamic)['name'],
+                                      "${(document.data() as dynamic)['name']} (" + "${(document.data() as dynamic)['city']})",
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: AppTheme.babygymPrimary,
