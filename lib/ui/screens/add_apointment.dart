@@ -1,6 +1,8 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
+import 'package:babygym/ui/components/mail.dart';
 import 'package:babygym/ui/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -322,7 +324,7 @@ class _AddApointmentState extends State<AddApointment> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 80.0,
-                    vertical: 25,
+                    vertical: 15,
                   ),
                   child: Container(
                     decoration: BoxDecoration(
@@ -335,6 +337,13 @@ class _AddApointmentState extends State<AddApointment> {
                           (instructor as dynamic)['name'].toString(),
                           _time,
                           _date,
+                        );
+                        // replace with babygym instructor email
+                        Mail.openEmail(
+                          toEmail: 'brendan.defaria@gmail.com',
+                          subject: 'Baby Gym Apointment - App',
+                          body:
+                              'Hello, \n \n ${(instructor as dynamic)['name'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will be attending your ${_time!.hour}:${formatMinute(_time!.minute.toString())} session on ${getWeekday(_date!.weekday.toString())} the ${_date!.day} ${getMonthName(_date!.month.toString())} ${_date!.year}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
                         );
                         Navigator.pushAndRemoveUntil(
                           context,
@@ -351,7 +360,49 @@ class _AddApointmentState extends State<AddApointment> {
                         // );
                       },
                       child: Text(
-                        'Book Apointment',
+                        'Book Apointment Via Email',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: AppTheme.babygymPrimary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 80.0,
+                    vertical: 0,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      // color: AppTheme.babygymGrey,
+                    ),
+                    child: MaterialButton(
+                      onPressed: () async {
+                        await addApointment(
+                          (instructor as dynamic)['name'].toString(),
+                          _time,
+                          _date,
+                        );
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => Home(),
+                          ),
+                          (route) => false,
+                        );
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => Home(),
+                        //   ),
+                        // );
+                      },
+                      child: Text(
+                        'Book Apointment Via Whatsapp',
                         style: TextStyle(
                           fontSize: 15,
                           color: AppTheme.babygymPrimary,
