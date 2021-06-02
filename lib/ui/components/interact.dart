@@ -24,4 +24,10 @@ class Interact {
 
     await _launchUrl(url);
   }
+
+  static Future launchWhatsapp(String toNumber, String message) async {
+    print(toNumber.substring(1));
+    String url = 'https://wa.me/+27${toNumber.substring(1)}?text=$message';
+    await _launchUrl(url);
+  }
 }

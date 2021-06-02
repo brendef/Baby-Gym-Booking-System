@@ -377,7 +377,7 @@ class _AddApointmentState extends State<AddApointment> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 80.0,
+                    horizontal: 50.0,
                     vertical: 0,
                   ),
                   child: Container(
@@ -392,7 +392,12 @@ class _AddApointmentState extends State<AddApointment> {
                           _time,
                           _date,
                         );
-
+                        Interact.launchWhatsapp(
+                          (instructor as dynamic)['mobile_number']
+                              .toString()
+                              .replaceAll(' ', ''),
+                          'Hello, \n \n ${(instructor as dynamic)['name'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will be attending your ${_time!.hour}:${formatMinute(_time!.minute.toString())} session on ${getWeekday(_date!.weekday.toString())} the ${_date!.day} ${getMonthName(_date!.month.toString())} ${_date!.year}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
+                        );
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
@@ -409,6 +414,7 @@ class _AddApointmentState extends State<AddApointment> {
                       },
                       child: Text(
                         'Book Apointment Via Whatsapp',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
                           color: AppTheme.babygymPrimary,
