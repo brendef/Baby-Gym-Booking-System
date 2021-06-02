@@ -1,6 +1,6 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
-import 'package:babygym/ui/components/mail.dart';
+import 'package:babygym/ui/components/interact.dart';
 import 'package:babygym/ui/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -153,10 +153,16 @@ class _AddApointmentState extends State<AddApointment> {
                               ),
                             ),
                           ),
-                          Text(
-                            '${(instructor as dynamic)['mobile_number'].toString()}',
-                            style: TextStyle(
-                              fontSize: 13,
+                          GestureDetector(
+                            onTap: () => Interact.makeCall(
+                                phoneNumber:
+                                    (instructor as dynamic)['mobile_number']
+                                        .toString()),
+                            child: Text(
+                              '${(instructor as dynamic)['mobile_number'].toString()} (Tap to call)',
+                              style: TextStyle(
+                                fontSize: 13,
+                              ),
                             ),
                           ),
                           Padding(
@@ -339,7 +345,7 @@ class _AddApointmentState extends State<AddApointment> {
                           _date,
                         );
                         // replace with babygym instructor email
-                        Mail.openEmail(
+                        Interact.openEmail(
                           toEmail: 'brendan.defaria@gmail.com',
                           subject: 'Baby Gym Apointment - App',
                           body:

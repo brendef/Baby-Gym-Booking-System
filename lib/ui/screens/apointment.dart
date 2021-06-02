@@ -1,6 +1,6 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
-import 'package:babygym/ui/components/mail.dart';
+import 'package:babygym/ui/components/interact.dart';
 import 'package:babygym/ui/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +117,7 @@ class _ApointmentState extends State<Apointment> {
                   (apointment as dynamic)['id'].toString(),
                 );
 
-                Mail.openEmail(
+                Interact.openEmail(
                   toEmail: 'brendan.defaria@gmail.com',
                   subject: 'Baby Gym Apointment - App',
                   body:
