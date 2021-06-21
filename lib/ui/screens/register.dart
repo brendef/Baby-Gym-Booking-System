@@ -54,7 +54,7 @@ class _RegisterState extends State<Register> {
         'Password is too weak, it has no numbers',
         style: TextStyle(color: Colors.red),
       );
-    } else if (password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+    } else if (!password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       setState(() {
         _notStrong = true;
       });
