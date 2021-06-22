@@ -54,7 +54,7 @@ class _RegisterState extends State<Register> {
         'Password is too weak, it has no numbers',
         style: TextStyle(color: Colors.red),
       );
-    } else if (password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+    } else if (!password.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       setState(() {
         _notStrong = true;
       });
@@ -299,13 +299,13 @@ class _RegisterState extends State<Register> {
                       !_validatePassword &&
                       _passwordsMatch &&
                       !_notStrong) {
-                    bool shouldNavigate = await register(
+                    String shouldNavigate = await register(
                       _nameField.text,
                       _cellNumberField.text,
                       _emailField.text,
                       _passwordField.text,
                     );
-                    if (shouldNavigate) {
+                    if (shouldNavigate == "true") {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -313,6 +313,11 @@ class _RegisterState extends State<Register> {
                         ),
                         (route) => false,
                       );
+                    }else{
+                      final snackBar = SnackBar(
+                            content: Text(shouldNavigate),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                   }
                 },
