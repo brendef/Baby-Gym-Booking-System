@@ -1,8 +1,5 @@
-import 'dart:html';
-
 import 'package:babygym/cards/instuctorCard.dart';
 import 'package:babygym/colors/app_theme.dart';
-import 'package:babygym/ui/screens/add_apointment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:babygym/model/instructor.dart';
@@ -86,7 +83,7 @@ class _Instructors extends State<Instructors> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Search',
-                      labelStyle: TextStyle(color: Colors.white),
+                      hintStyle: TextStyle(color: AppTheme.babygymGrey),
                     ),
                   ),
                 ),
