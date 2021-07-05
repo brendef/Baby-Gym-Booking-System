@@ -111,7 +111,6 @@ class _LoginState extends State<Login> {
                         } else {
                           _validatePassword = false;
                         }
-
                         if (_emailField.text.trim().isEmpty) {
                           _validateEmail = true;
                         } else {
@@ -119,9 +118,9 @@ class _LoginState extends State<Login> {
                         }
                       });
                       if (!_validateEmail && !_validatePassword) {
-                        bool shouldNavigate =
+                        String shouldNavigate =
                             await signIn(_emailField.text, _passwordField.text);
-                        if (shouldNavigate) {
+                        if (shouldNavigate == "true") {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -129,6 +128,11 @@ class _LoginState extends State<Login> {
                             ),
                             (route) => false,
                           );
+                        }else{                          
+                          final snackBar = SnackBar(
+                            content: Text(shouldNavigate),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       }
                     },

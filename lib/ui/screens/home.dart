@@ -46,13 +46,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: _currentIndex != 1
           ? AppBar(
-              title: Text(_currentIndex == 0
-                  ? 'Bookings'
-                  : _currentIndex == 1
-                      ? 'Instructors'
-                      : _currentIndex == 2
-                          ? 'Profile'
-                          : ''),
+              title: Center(
+                child: Text(_currentIndex == 0
+                    ? 'Bookings'
+                    : _currentIndex == 1
+                        ? 'Instructors'
+                        : _currentIndex == 2
+                            ? 'Profile'
+                            : ''),
+              ),
               actions: [
                 PopupMenuButton<String>(
                   icon: Icon(Icons.more_vert),

@@ -26,7 +26,8 @@ class _ProfileState extends State<Profile> {
   bool _validateConfirmPassword = false;
   bool _notStrong = false;
   bool _passwordsMatch = false;
-  bool _currentPassword = false;
+  String _currentPassword = "false";
+  bool _currentPassBool = false;
 
   Text passwordMessage = Text('');
 
@@ -77,6 +78,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.currentUser!.uid);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -96,6 +98,7 @@ class _ProfileState extends State<Profile> {
           }
           return ListView(
             children: snapshot.data!.docs.map((document) {
+              print(document);
               return Column(
                 children: [
                   Container(
@@ -375,18 +378,21 @@ class _ProfileState extends State<Profile> {
                                     _newPasswordField.text,
                                     _confirmPasswordField.text,
                                   );
-                                  if (!_currentPassword) {
+                                  if (!(_currentPassword == "true")) {
                                     passwordMessage = Text(
                                       'Current password is incorrect',
                                       style: TextStyle(color: Colors.red),
                                     );
+                                  }
+                                  if (_currentPassword == "true") {
+                                    _currentPassBool = true;
                                   }
                                   if (!_validatePassword &&
                                       !_validateNewPassword &&
                                       !_validateConfirmPassword &&
                                       !_notStrong &&
                                       _passwordsMatch &&
-                                      _currentPassword) {
+                                      _currentPassBool) {
                                     bool didChange = await changePassword(
                                       _newPasswordField.text,
                                     );

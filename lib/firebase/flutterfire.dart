@@ -6,34 +6,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-Future<bool> signIn(String email, String password) async {
+Future<String> signIn(String email, String password) async {
   try {
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
-    return true;
+    return "true";
   } catch (error) {
-    print(error.toString());
-    return false;
+    return error.toString();
   }
 }
 
-Future<bool> register(
+Future<String> register(
     String name, String cellphone, String email, String password) async {
   try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     updateUserDetails(name, cellphone);
-    return true;
+    return "true";
   } on FirebaseAuthException catch (error) {
     if (error.code == 'weak-password') {
       print('The password provided is too weak');
     } else if (error.code == 'email-already-in-use') {
       print('The account already exists for that email');
     }
-    return false;
+    return error.toString();
   } catch (error) {
-    print(error.toString());
-    return false;
+    return error.toString();
   }
 }
 
