@@ -23,7 +23,7 @@ class Splash extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.network(
+                  Image.asset(
                     'babygym_logo.png',
                     width: 150,
                     height: 150,
