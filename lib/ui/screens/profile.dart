@@ -78,6 +78,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    print(FirebaseAuth.instance.currentUser!.uid);
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -97,6 +98,7 @@ class _ProfileState extends State<Profile> {
           }
           return ListView(
             children: snapshot.data!.docs.map((document) {
+              print(document);
               return Column(
                 children: [
                   Container(
