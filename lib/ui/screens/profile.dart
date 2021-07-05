@@ -198,7 +198,7 @@ class _ProfileState extends State<Profile> {
                                 color: AppTheme.babygymPrimary,
                                 onPressed: () {
                                   setState(() {
-                                    if (_numberField.text.trim().isEmpty) {
+                                    if (_nameField.text.isEmpty) {
                                       _validateName = true;
                                     } else {
                                       _validateName = false;
@@ -211,7 +211,7 @@ class _ProfileState extends State<Profile> {
                                   });
                                 },
                                 child: Text(
-                                  'Change Number',
+                                  'Change Name',
                                   style: TextStyle(
                                     color: AppTheme.babygymGrey,
                                   ),

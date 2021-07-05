@@ -1,6 +1,8 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
+import 'package:babygym/ui/components/interact.dart';
 import 'package:babygym/ui/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -24,6 +26,66 @@ class _AddApointmentState extends State<AddApointment> {
   void initState() {
     instructor = widget._document;
     super.initState();
+  }
+
+  String getMonthName(String month) {
+    switch (month) {
+      case '1':
+        return 'January';
+      case '2':
+        return 'Febuary';
+      case '3':
+        return 'March';
+      case '4':
+        return 'April';
+      case '5':
+        return 'May';
+      case '6':
+        return 'June';
+      case '7':
+        return 'July';
+      case '8':
+        return 'August';
+      case '9':
+        return 'September';
+      case '10':
+        return 'October';
+      case '11':
+        return 'November';
+      case '12':
+        return 'December';
+      default:
+        return 'Month';
+    }
+  }
+
+  String getWeekday(String weekday) {
+    switch (weekday) {
+      case '1':
+        return 'Monday';
+      case '2':
+        return 'Tuesday';
+      case '3':
+        return 'Wednesday';
+      case '4':
+        return 'Thursday';
+      case '5':
+        return 'Friday';
+      case '6':
+        return 'Saturday';
+      case '7':
+        return 'Sunday';
+      default:
+        return 'Weekday';
+    }
+  }
+
+  String formatMinute(String minute) {
+    if (minute == '0') {
+      return '00';
+    } else {
+      return minute;
+    }
   }
 
   String getAvailability(String days) {
@@ -91,10 +153,16 @@ class _AddApointmentState extends State<AddApointment> {
                               ),
                             ),
                           ),
-                          Text(
-                            '${(instructor as dynamic)['mobile_number'].toString()}',
-                            style: TextStyle(
-                              fontSize: 13,
+                          GestureDetector(
+                            onTap: () => Interact.makeCall(
+                                phoneNumber:
+                                    (instructor as dynamic)['mobile_number']
+                                        .toString()),
+                            child: Text(
+                              '${(instructor as dynamic)['mobile_number'].toString()} (Tap to call)',
+                              style: TextStyle(
+                                fontSize: 13,
+                              ),
                             ),
                           ),
                           Padding(
@@ -194,7 +262,7 @@ class _AddApointmentState extends State<AddApointment> {
                     width: MediaQuery.of(context).size.width / 1.3,
                     child: Text(_date == null
                         ? 'Select a date'
-                        : '${_date!.weekday} ${_date!.day} ${_date!.month} ${_date!.year}'),
+                        : '${getWeekday(_date!.weekday.toString())} ${_date!.day} ${getMonthName(_date!.month.toString())} ${_date!.year}'),
                   ),
                 ),
                 Padding(
@@ -216,7 +284,7 @@ class _AddApointmentState extends State<AddApointment> {
                         });
                       }),
                       child: Text(
-                        'Select a date',
+                        'select a date',
                         style: TextStyle(
                           color: AppTheme.babygymGrey,
                         ),
@@ -231,7 +299,7 @@ class _AddApointmentState extends State<AddApointment> {
                     width: MediaQuery.of(context).size.width / 1.3,
                     child: Text(_time == null
                         ? 'Select the time'
-                        : '${_time!.hour} : ${_time!.minute}'),
+                        : '${_time!.hour}:${formatMinute(_time!.minute.toString())}'),
                   ),
                 ),
                 Padding(
@@ -251,7 +319,7 @@ class _AddApointmentState extends State<AddApointment> {
                         });
                       }),
                       child: Text(
-                        'Select a time',
+                        'select a time',
                         style: TextStyle(
                           color: AppTheme.babygymGrey,
                         ),
@@ -262,7 +330,7 @@ class _AddApointmentState extends State<AddApointment> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 80.0,
-                    vertical: 25,
+                    vertical: 15,
                   ),
                   child: Container(
                     decoration: BoxDecoration(
@@ -275,6 +343,13 @@ class _AddApointmentState extends State<AddApointment> {
                           (instructor as dynamic)['name'].toString(),
                           _time,
                           _date,
+                        );
+                        // replace with babygym instructor email
+                        Interact.openEmail(
+                          toEmail: 'brendan.defaria@gmail.com',
+                          subject: 'Baby Gym Apointment - App',
+                          body:
+                              'Hello, \n \n ${(instructor as dynamic)['name'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will be attending your ${_time!.hour}:${formatMinute(_time!.minute.toString())} session on ${getWeekday(_date!.weekday.toString())} the ${_date!.day} ${getMonthName(_date!.month.toString())} ${_date!.year}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
                         );
                         Navigator.pushAndRemoveUntil(
                           context,
@@ -291,7 +366,55 @@ class _AddApointmentState extends State<AddApointment> {
                         // );
                       },
                       child: Text(
-                        'Book Apointment',
+                        'Book Apointment Via Email',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: AppTheme.babygymPrimary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50.0,
+                    vertical: 0,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      // color: AppTheme.babygymGrey,
+                    ),
+                    child: MaterialButton(
+                      onPressed: () async {
+                        await addApointment(
+                          (instructor as dynamic)['name'].toString(),
+                          _time,
+                          _date,
+                        );
+                        Interact.launchWhatsapp(
+                          (instructor as dynamic)['mobile_number']
+                              .toString()
+                              .replaceAll(' ', ''),
+                          'Hello, \n \n ${(instructor as dynamic)['name'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will be attending your ${_time!.hour}:${formatMinute(_time!.minute.toString())} session on ${getWeekday(_date!.weekday.toString())} the ${_date!.day} ${getMonthName(_date!.month.toString())} ${_date!.year}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
+                        );
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => Home(),
+                          ),
+                          (route) => false,
+                        );
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => Home(),
+                        //   ),
+                        // );
+                      },
+                      child: Text(
+                        'Book Apointment Via Whatsapp',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
                           color: AppTheme.babygymPrimary,
