@@ -115,7 +115,7 @@ class _ApointmentState extends State<Apointment> {
               onPressed: () async {
                 if ((apointment as dynamic)['bookedVia'] == 0) {
                   Interact.launchWhatsapp(
-                    (apointment as dynamic)['mobile_number']
+                    (apointment as dynamic)['mobileNumber']
                         .toString()
                         .replaceAll(' ', ''),
                     'Hello, \n \n ${(apointment as dynamic)['instructor'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will unfortunatly have to cancel my apointment for your ${(apointment as dynamic)['time']['hour'].toString()}:${formatMinute((apointment as dynamic)['time']['minute'].toString())} session on ${getWeekday((apointment as dynamic)['date']['weekday'].toString())} the ${(apointment as dynamic)['date']['day'].toString()} ${getMonthName((apointment as dynamic)['date']['month'].toString())} ${(apointment as dynamic)['date']['year'].toString()}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
