@@ -59,23 +59,19 @@ Future<bool> changePassword(String password) async {
 
 void updateUserDetails(String name, String cellphone) {
   User? user = FirebaseAuth.instance.currentUser;
-
-  if (user != null) {
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(user.uid)
-        .collection('Details')
-        .doc(user.uid)
-        .set({
-      'name': name,
-      'email': user.email,
-      'cellphone': cellphone,
-      'uid': user.uid,
-      'photo_url': 'defaultPhoto.png'
-    });
-  }
-
-  FirebaseAuth.instance.currentUser!.updateProfile(displayName: name);
+  user!.updateProfile(displayName: name);
+  FirebaseFirestore.instance
+      .collection('Users')
+      .doc(user.uid)
+      .collection('Details')
+      .doc(user.uid)
+      .set({
+    'name': name,
+    'email': user.email,
+    'cellphone': cellphone,
+    'uid': user.uid,
+    'photo_url': 'defaultPhoto.png'
+  });
 }
 
 bool updateName(String name) {
@@ -131,8 +127,8 @@ Future<void> updateProfilePicture(String name) async {
   }
 }
 
-Future<bool> addApointment(
-    String instructor, TimeOfDay? time, DateTime? date) async {
+Future<bool> addApointment(String instructor, TimeOfDay? time, DateTime? date,
+    int bookedVia, String mobileNumber) async {
   try {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance
@@ -143,6 +139,7 @@ Future<bool> addApointment(
         .set({
       'id': date.toString() + time.toString(),
       'instructor': instructor,
+      'mobileNumber': mobileNumber,
       'time': {
         'hour': time!.hour,
         'minute': time.minute,
@@ -152,7 +149,8 @@ Future<bool> addApointment(
         'day': date.day,
         'month': date.month,
         'year': date.year,
-      }
+      },
+      'bookedVia': bookedVia,
     }, SetOptions(merge: true));
     throw ('error in add apointment');
   } catch (error) {

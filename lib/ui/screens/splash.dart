@@ -40,7 +40,7 @@ class Splash extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 200,
+                    height: 100,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),

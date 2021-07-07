@@ -1,5 +1,6 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
+import 'package:babygym/model/instructor.dart';
 import 'package:babygym/ui/components/interact.dart';
 import 'package:babygym/ui/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -113,18 +114,31 @@ class _ApointmentState extends State<Apointment> {
             child: MaterialButton(
               color: Colors.red,
               onPressed: () async {
-                _apointmentRemoved = await removeApointment(
-                  (apointment as dynamic)['id'].toString(),
-                );
-
-                Interact.openEmail(
-                  toEmail: 'brendan.defaria@gmail.com',
-                  subject: 'Baby Gym Apointment - App',
-                  body:
-                      'Hello, \n \n ${(apointment as dynamic)['instructor'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will unfortunatly have to cancel my apointment for your ${(apointment as dynamic)['time']['hour'].toString()}:${formatMinute((apointment as dynamic)['time']['minute'].toString())} session on ${getWeekday((apointment as dynamic)['date']['weekday'].toString())} the ${(apointment as dynamic)['date']['day'].toString()} ${getMonthName((apointment as dynamic)['date']['month'].toString())} ${(apointment as dynamic)['date']['year'].toString()}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
-                );
-
-                if (_apointmentRemoved) {
+                if ((apointment as dynamic)['bookedVia'] == 0) {
+                  Interact.launchWhatsapp(
+                    (apointment as dynamic)['mobile_number']
+                        .toString()
+                        .replaceAll(' ', ''),
+                    'Hello, \n \n ${(apointment as dynamic)['instructor'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will unfortunatly have to cancel my apointment for your ${(apointment as dynamic)['time']['hour'].toString()}:${formatMinute((apointment as dynamic)['time']['minute'].toString())} session on ${getWeekday((apointment as dynamic)['date']['weekday'].toString())} the ${(apointment as dynamic)['date']['day'].toString()} ${getMonthName((apointment as dynamic)['date']['month'].toString())} ${(apointment as dynamic)['date']['year'].toString()}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
+                  );
+                  await removeApointment(
+                      (apointment as dynamic)['id'].toString());
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => Home(),
+                    ),
+                    (route) => false,
+                  );
+                } else {
+                  Interact.openEmail(
+                    toEmail: 'brendan.defaria@gmail.com',
+                    subject: 'Baby Gym Apointment - App',
+                    body:
+                        'Hello, \n \n ${(apointment as dynamic)['instructor'].toString()} I ${FirebaseAuth.instance.currentUser!.displayName} will unfortunatly have to cancel my apointment for your ${(apointment as dynamic)['time']['hour'].toString()}:${formatMinute((apointment as dynamic)['time']['minute'].toString())} session on ${getWeekday((apointment as dynamic)['date']['weekday'].toString())} the ${(apointment as dynamic)['date']['day'].toString()} ${getMonthName((apointment as dynamic)['date']['month'].toString())} ${(apointment as dynamic)['date']['year'].toString()}. \n \n Kind Regards \n ${FirebaseAuth.instance.currentUser!.displayName.toString().split(" ").elementAt(0)}',
+                  );
+                  await removeApointment(
+                      (apointment as dynamic)['id'].toString());
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(

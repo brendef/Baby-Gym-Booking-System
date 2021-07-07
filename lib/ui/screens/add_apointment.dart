@@ -278,7 +278,7 @@ class _AddApointmentState extends State<AddApointment> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 250),
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -327,7 +327,7 @@ class _AddApointmentState extends State<AddApointment> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 250),
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -371,6 +371,8 @@ class _AddApointmentState extends State<AddApointment> {
                           (instructor as dynamic)['name'].toString(),
                           _time,
                           _date,
+                          1,
+                          (instructor as dynamic)['mobile_number'].toString(),
                         );
                         // replace with babygym instructor email
                         Interact.openEmail(
@@ -419,6 +421,8 @@ class _AddApointmentState extends State<AddApointment> {
                           (instructor as dynamic)['name'].toString(),
                           _time,
                           _date,
+                          0,
+                          (instructor as dynamic)['mobile_number'].toString(),
                         );
                         Interact.launchWhatsapp(
                           (instructor as dynamic)['mobile_number']
