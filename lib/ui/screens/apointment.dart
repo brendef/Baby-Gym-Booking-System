@@ -1,6 +1,5 @@
 import 'package:babygym/colors/app_theme.dart';
 import 'package:babygym/firebase/flutterfire.dart';
-import 'package:babygym/model/instructor.dart';
 import 'package:babygym/ui/components/interact.dart';
 import 'package:babygym/ui/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +25,7 @@ class _ApointmentState extends State<Apointment> {
     super.initState();
   }
 
-  bool _apointmentRemoved = false;
+  // bool _apointmentRemoved = false;
 
   String getMonthName(String month) {
     switch (month) {
