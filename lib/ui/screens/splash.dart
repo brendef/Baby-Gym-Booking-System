@@ -20,13 +20,13 @@ class Splash extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
                     'babygym_logo.png',
-                    width: 150,
-                    height: 150,
+                    width: 200,
+                    height: 200,
                   ),
                   Container(
                     padding: const EdgeInsets.all(8),
@@ -34,20 +34,21 @@ class Splash extends StatelessWidget {
                     child: Text(
                       'Welcome to Baby Gym',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 32,
                         color: AppTheme.babygymGrey,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 200,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
+                      width: MediaQuery.of(context).size.width / 1.4,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                         color: AppTheme.babygymPrimary,
                       ),
                       child: MaterialButton(
@@ -72,9 +73,10 @@ class Splash extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
+                      width: MediaQuery.of(context).size.width / 1.4,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                         color: AppTheme.babygymPrimary,
                       ),
                       child: MaterialButton(

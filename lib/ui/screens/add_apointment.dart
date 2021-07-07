@@ -146,7 +146,7 @@ class _AddApointmentState extends State<AddApointment> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Text(
-                              'Cell phone number:',
+                              'Cell Phone Number:',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -240,19 +240,23 @@ class _AddApointmentState extends State<AddApointment> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Make an apointment',
-                    style: TextStyle(
-                      fontSize: 20,
+                  child: Center(
+                    child: Text(
+                      'Make An Apointment',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    '${(instructor as dynamic)['name'].toString().split(" ").elementAt(0)}\'s ' +
-                        'availability: ' +
-                        '${getAvailability((instructor as dynamic)['days'].toString())}',
+                  child: Center(
+                    child: Text(
+                      '${(instructor as dynamic)['name'].toString().split(" ").elementAt(0)}\'s ' +
+                          'availability: ' +
+                          '${getAvailability((instructor as dynamic)['days'].toString())}',
+                    ),
                   ),
                 ),
                 Padding(
@@ -260,13 +264,21 @@ class _AddApointmentState extends State<AddApointment> {
                       const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.3,
-                    child: Text(_date == null
-                        ? 'Select a date'
-                        : '${getWeekday(_date!.weekday.toString())} ${_date!.day} ${getMonthName(_date!.month.toString())} ${_date!.year}'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          _date == null
+                              ? 'Select The Date'
+                              : '${getWeekday(_date!.weekday.toString())} ${_date!.day} ${getMonthName(_date!.month.toString())} ${_date!.year}',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 250),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -283,10 +295,14 @@ class _AddApointmentState extends State<AddApointment> {
                           _date = date;
                         });
                       }),
-                      child: Text(
-                        'select a date',
-                        style: TextStyle(
-                          color: AppTheme.babygymGrey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Select The Date',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppTheme.babygymGrey,
+                          ),
                         ),
                       ),
                     ),
@@ -297,13 +313,21 @@ class _AddApointmentState extends State<AddApointment> {
                       const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
                   child: Container(
                     width: MediaQuery.of(context).size.width / 1.3,
-                    child: Text(_time == null
-                        ? 'Select the time'
-                        : '${_time!.hour}:${formatMinute(_time!.minute.toString())}'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          _time == null
+                              ? 'Select The Time'
+                              : '${_time!.hour}:${formatMinute(_time!.minute.toString())}',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 250),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
@@ -318,10 +342,14 @@ class _AddApointmentState extends State<AddApointment> {
                           _time = time;
                         });
                       }),
-                      child: Text(
-                        'select a time',
-                        style: TextStyle(
-                          color: AppTheme.babygymGrey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Select The Time',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppTheme.babygymGrey,
+                          ),
                         ),
                       ),
                     ),

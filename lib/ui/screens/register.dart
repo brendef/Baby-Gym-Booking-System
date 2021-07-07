@@ -4,6 +4,7 @@ import 'package:babygym/ui/screens/home.dart';
 import 'package:babygym/ui/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -96,13 +97,18 @@ class _RegisterState extends State<Register> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              'babygym_logo.png',
+              width: 200,
+              height: 200,
+            ),
             Text(
               'Welcome to Baby Gym',
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             SizedBox(height: 30),
             Container(
-              width: MediaQuery.of(context).size.width / 1.3,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: TextFormField(
                 style: TextStyle(color: AppTheme.babygymGrey),
                 controller: _nameField,
@@ -116,6 +122,7 @@ class _RegisterState extends State<Register> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Colors.white10,
                     ),
@@ -128,7 +135,7 @@ class _RegisterState extends State<Register> {
               height: 5,
             ),
             Container(
-              width: MediaQuery.of(context).size.width / 1.3,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: TextFormField(
                 style: TextStyle(color: AppTheme.babygymGrey),
                 controller: _emailField,
@@ -142,6 +149,7 @@ class _RegisterState extends State<Register> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Colors.white10,
                     ),
@@ -154,7 +162,7 @@ class _RegisterState extends State<Register> {
               height: 5,
             ),
             Container(
-              width: MediaQuery.of(context).size.width / 1.3,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: TextFormField(
                 style: TextStyle(color: AppTheme.babygymGrey),
                 controller: _cellNumberField,
@@ -168,6 +176,7 @@ class _RegisterState extends State<Register> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Colors.white10,
                     ),
@@ -180,7 +189,7 @@ class _RegisterState extends State<Register> {
               height: 5,
             ),
             Container(
-              width: MediaQuery.of(context).size.width / 1.3,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: TextFormField(
                 style: TextStyle(color: AppTheme.babygymGrey),
                 controller: _passwordField,
@@ -195,6 +204,7 @@ class _RegisterState extends State<Register> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Colors.white10,
                     ),
@@ -207,7 +217,7 @@ class _RegisterState extends State<Register> {
               height: 5,
             ),
             Container(
-              width: MediaQuery.of(context).size.width / 1.3,
+              width: MediaQuery.of(context).size.width / 1.4,
               child: TextFormField(
                 style: TextStyle(color: AppTheme.babygymGrey),
                 controller: _confirmPasswordField,
@@ -223,6 +233,7 @@ class _RegisterState extends State<Register> {
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: Colors.white10,
                     ),
@@ -313,11 +324,11 @@ class _RegisterState extends State<Register> {
                         ),
                         (route) => false,
                       );
-                    }else{
+                    } else {
                       final snackBar = SnackBar(
-                            content: Text(shouldNavigate),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        content: Text(shouldNavigate),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                   }
                 },

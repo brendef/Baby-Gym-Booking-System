@@ -34,6 +34,11 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+                    'babygym_logo.png',
+                    width: 200,
+                    height: 200,
+                  ),
             Text(
               'Welcome back to Baby Gym',
               style: TextStyle(color: Colors.white, fontSize: 25),
@@ -43,7 +48,7 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width / 1.3,
+                  width: MediaQuery.of(context).size.width / 1.4,
                   child: TextFormField(
                     style: TextStyle(color: AppTheme.babygymGrey),
                     controller: _emailField,
@@ -58,6 +63,7 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(
                           color: Colors.white10,
                         ),
@@ -70,7 +76,7 @@ class _LoginState extends State<Login> {
                   height: 5,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width / 1.3,
+                  width: MediaQuery.of(context).size.width / 1.4,
                   child: TextFormField(
                     style: TextStyle(color: AppTheme.babygymGrey),
                     controller: _passwordField,
@@ -85,6 +91,7 @@ class _LoginState extends State<Login> {
                         borderRadius: BorderRadius.circular(5.0),
                       ),
                       enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(
                           color: Colors.white10,
                         ),

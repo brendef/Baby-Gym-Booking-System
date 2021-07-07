@@ -223,7 +223,7 @@ class _ProfileState extends State<Profile> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text(
-                            'Change Cellphone number',
+                            'Change Cellphone Number',
                             style: TextStyle(fontSize: 17),
                           ),
                         ),
@@ -233,7 +233,7 @@ class _ProfileState extends State<Profile> {
                             TextFormField(
                               controller: _numberField,
                               decoration: InputDecoration(
-                                labelText: "Enter Cellphone number",
+                                labelText: "Enter Cellphone Number",
                                 errorText: _validateNumber
                                     ? 'Number Can\'t Be Empty'
                                     : null,

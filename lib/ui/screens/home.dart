@@ -28,12 +28,9 @@ class _HomeState extends State<Home> {
   void handleClick(String value) {
     switch (value) {
       case 'Find Instructor':
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Instructors(),
-          ),
-        );
+        {
+          _incrementTab(1);
+        }
         break;
       case 'Logout':
         signOut(context);
@@ -110,12 +107,7 @@ class _HomeState extends State<Home> {
           ? FloatingActionButton(
               backgroundColor: AppTheme.babygymPrimary,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Instructors(),
-                  ),
-                );
+                _incrementTab(1);
               },
               child: Icon(Icons.add, color: Colors.white),
             )
