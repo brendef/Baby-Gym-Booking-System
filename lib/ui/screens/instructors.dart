@@ -3,8 +3,6 @@ import 'package:babygym/colors/app_theme.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:babygym/model/instructor.dart';
-import 'package:babygym/ui/screens/apointments.dart';
-import 'package:babygym/ui/screens/profile.dart';
 
 class Instructors extends StatefulWidget {
   @override
@@ -70,20 +68,6 @@ class _Instructors extends State<Instructors> {
     return "Complete";
   }
 
-  List<Widget> _pages = [
-    Apointments(),
-    Instructors(),
-    Profile(),
-  ];
-
-  int _currentIndex = 1;
-
-  void _incrementTab(index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,29 +111,6 @@ class _Instructors extends State<Instructors> {
                 buildInstructorCard(context, _resultsList[index]),
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        unselectedItemColor: AppTheme.babygymSecondary,
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Instructors',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          )
-        ],
-        onTap: (index) {
-          _incrementTab(index);
-        },
       ),
     );
   }
