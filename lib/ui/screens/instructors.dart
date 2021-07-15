@@ -70,7 +70,6 @@ class _Instructors extends State<Instructors> {
 
   @override
   Widget build(BuildContext context) {
-    print("Showing instructors");
     return Scaffold(
       appBar: AppBar(
         title: typing

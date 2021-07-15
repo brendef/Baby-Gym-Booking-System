@@ -26,17 +26,23 @@ buildInstructorCard(BuildContext context, DocumentSnapshot document) {
         // height: MediaQuery.of(context).size.height / 12,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: AppTheme.babygymWhite,
+          color: AppTheme.babygymGrey,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded(
               flex: 1,
-              child: Image.network(
-                (document.data() as dynamic)['photo_url'],
-                width: 130,
-                height: 130,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(1000.0),
+                  child: Image.network(
+                    (document.data() as dynamic)['photo_url'],
+                    width: 130,
+                    height: 130,
+                  ),
+                ),
               ),
             ),
             SizedBox(

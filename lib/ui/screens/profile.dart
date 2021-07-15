@@ -150,6 +150,11 @@ class _ProfileState extends State<Profile> {
                           '${(document.data() as dynamic)['email']}',
                           style: TextStyle(color: Colors.white),
                         ),
+                        SizedBox(height: 5.0),
+                        Text(
+                          '${(document.data() as dynamic)['cellphone']}',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ],
                     ),
                   ),
@@ -182,6 +187,7 @@ class _ProfileState extends State<Profile> {
                               controller: _nameField,
                               decoration: InputDecoration(
                                 labelText: "Enter Full Name",
+                                hintText: "${(document.data() as dynamic)['name']}", 
                                 errorText: _validateName
                                     ? 'Name Can\'t Be Empty'
                                     : null,
@@ -234,6 +240,7 @@ class _ProfileState extends State<Profile> {
                               controller: _numberField,
                               decoration: InputDecoration(
                                 labelText: "Enter Cellphone Number",
+                                hintText: "${(document.data() as dynamic)['cellphone']}",                                
                                 errorText: _validateNumber
                                     ? 'Number Can\'t Be Empty'
                                     : null,
